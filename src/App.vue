@@ -1,26 +1,45 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="min-h-screen flex justify-center items-center" :class="can ? 'bg-green-300 text-green-900' : 'bg-red-300 text-red-900'">
+    <div>
+      <h1 class="text-xl font-medium mb-4">Pode fazer barulho?</h1>
+      <div class="text-5xl font-bold text-center">
+        <div v-if="can">Sim 👍</div>
+        <div v-else>Não 👎</div>
+      </div>
+    </div>
+    <div class="fixed bottom-3 text-sm">
+      <strong class="font-semibold">Os horários permitidos são:</strong>
+      <ul class="font-light">
+        <li>Segunda à sexta das 8h às 18h</li>
+        <li>Sábado das 8h às 12h</li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  computed: {
+    can() {
+      const now = new Date();
+      const weekday = now.getDay();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+
+      if (weekday >= 1 && weekday <= 5) {
+        return (hours > 8 || (hours === 8 && minutes >= 0)) && (hours < 18 || (hours === 18 && minutes === 0));
+      }
+
+      if (weekday === 6) {
+        return (hours > 8 || (hours === 8 && minutes >= 0)) && (hours < 12 || (hours === 12 && minutes === 0));
+      }
+
+      return false;
+
+    }
   }
 }
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style src="./assets/style/app.css" />
