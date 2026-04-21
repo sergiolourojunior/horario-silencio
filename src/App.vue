@@ -10,8 +10,9 @@
     <div class="fixed bottom-3 text-sm">
       <strong class="font-semibold">Os horários permitidos são:</strong>
       <ul class="font-light">
-        <li>Segunda à sexta das 8h às 18h</li>
+        <li>Segunda à sexta das 8h às 12h e das 14h às 18h</li>
         <li>Sábado das 8h às 12h</li>
+        <li>Domingo e Feriados não pode fazer barulho</li>
       </ul>
     </div>
   </div>
@@ -28,7 +29,7 @@ export default {
       const minutes = now.getMinutes();
 
       if (weekday >= 1 && weekday <= 5) {
-        return (hours > 8 || (hours === 8 && minutes >= 0)) && (hours < 18 || (hours === 18 && minutes === 0));
+        return ((hours > 8 || (hours === 8 && minutes >= 0)) && (hours < 12 || (hours === 12 && minutes === 0)) || (hours > 14 || (hours === 14 && minutes >= 0)) && (hours < 18 || (hours === 18 && minutes === 0)));
       }
 
       if (weekday === 6) {
